@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const questions = [
   {
     id: 3457,
@@ -41,11 +43,22 @@ function App() {
 }
 
 function FlashCard() {
+  const [selectedId, setSelectedId] = useState(null);
+
+  function handleClick(questionId) {
+    setSelectedId(questionId !== selectedId ? questionId : null);
+  }
   return (
     <div className="flashcards">
       {questions.map((question) => (
-        <div key={question.id}>
-          <p>{question.question}</p>
+        <div
+          key={question.id}
+          className={selectedId == question.id ? "selected" : ""}
+          onClick={() => handleClick(question.id)}
+        >
+          <p>
+            {selectedId === question.id ? question.answer : question.question}
+          </p>
         </div>
       ))}
     </div>
